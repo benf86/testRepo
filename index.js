@@ -1,7 +1,11 @@
 const express = require('express');
 const app = express();
 
+const bodyParser = require('body-parser');
+
 const port = 8455;
+
+app.use(bodyParser.json());
 
 app.use('/', (req, res, next) => {
   console.log('VVVVVVVVVVVVVVVVVVVVVVVVVVV');
