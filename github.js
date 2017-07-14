@@ -17,8 +17,9 @@ function getBlog (res) {
     console.log(uri);
     const blog = yield request.get(uri);
     console.log(blog || 'no blog available');
-    res.send(blog);
-  });
+    return blog;
+  })
+  .then(r => res.send(r));
 }
 
 
