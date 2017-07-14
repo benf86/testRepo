@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 
 const port = 8455;
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/', (req, res, next) => {
