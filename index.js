@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 
 app.use('/', (req, res, next) => {
   console.log('VVVVVVVVVVVVVVVVVVVVVVVVVVV');
-  console.log(req.body);
+  console.log(JSON.parse(req.body));
   console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^');
   res.send();
 });
