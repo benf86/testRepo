@@ -1,18 +1,14 @@
 const express = require('express');
-const app = express();
-
 const bodyParser = require('body-parser');
+const ghAPI = require('./github');
 
 const port = 8455;
+
+const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/', (req, res, next) => {
-  console.log('VVVVVVVVVVVVVVVVVVVVVVVVVVV');
-  console.log(JSON.parse(req.body.payload));
-  console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-  res.send();
-});
+app.use('/', ghAPI.receivePushNotification);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
