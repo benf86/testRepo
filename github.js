@@ -17,5 +17,5 @@ module.exports = {
   handlePushNotification: (req, res, next) =>
     parsePush(JSON.parse(req.body.payload))
     .then(res.send)
-    .catch(e => { debugger }),
+    .catch(e => { debugger; res.status(500); res.send('fail'); }),
 };
