@@ -1,4 +1,5 @@
 const request = require('request-promise');
+const yaml = require('js-yaml');
 const githubRawPrefix = 'https://raw.githubusercontent.com';
 
 
@@ -6,7 +7,7 @@ const getBlog = repository => Promise.all([
   request.get(`${githubRawPrefix}/${repository.full_name}/master/blog.md`),
   request.get(`${githubRawPrefix}/${repository.full_name}/master/meta.yaml`),
 ])
-.then(([blog, meta]) => ({ blog, meta }));
+.then(([blog, meta]) => ({ blog, meta: yaml.safeLoad(meta) }));
 
 const logBlog = (pusher, { blog, meta }) =>
   console.log(`Pusher:\n${JSON.stringify(pusher, 0, 2)}\nMeta: ${meta}\nContent:\n${blog}`) || ({ pusher, blog, meta });
