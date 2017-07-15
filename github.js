@@ -6,7 +6,7 @@ const getBlog = repository => Promise.all([
   request.get(`${githubRawPrefix}/${repository.full_name}/master/blog.md`),
   request.get(`${githubRawPrefix}/${repository.full_name}/master/meta.yaml`),
 ])
-.spread((blog, meta) => ({ blog, meta }));
+.then(([blog, meta]) => ({ blog, meta }));
 
 const logBlog = (pusher, { blog, meta }) =>
   console.log(`Pusher:\n${JSON.stringify(pusher, 0, 2)}\nMeta: ${meta}\nContent:\n${blog}`) || ({ pusher, blog, meta });
