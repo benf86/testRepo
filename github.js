@@ -14,5 +14,8 @@ const parsePush = ({ repository, pusher }) =>
   .then(logBlog.bind(null, pusher));
 
 module.exports = {
-  handlePushNotification: (req, res, next) => parsePush(JSON.parse(req.body.payload)).then(res.send),
+  handlePushNotification: (req, res, next) =>
+    parsePush(JSON.parse(req.body.payload))
+    .then(res.send)
+    .catch(e => { debugger }),
 };
