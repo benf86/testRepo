@@ -6,7 +6,7 @@ const getBlog = repository =>
   request.get(`${githubRawPrefix}/${repository.full_name}/master/blog.md`);
 
 const logBlog = (pusher, blog) =>
-  console.log(`Pusher:\t${pusher}\n,Content:\n${blog}`) || ({ pusher, blog });
+  console.log(`Pusher:\t${JSON.stringify(pusher, 0, 2)}\nContent:\n${blog}`) || ({ pusher, blog });
 
 /* ************************************************************** */
 
