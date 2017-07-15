@@ -9,14 +9,7 @@ const getBlog = repository => Promise.all([
 ])
 .then(([blog, meta]) => ({ blog, meta: yaml.safeLoad(meta) }));
 
-// const logBlog = ({ blog, meta }) =>
-//   console.log(`Meta: ${meta}\nContent:\n${blog}`) || ({ blog, meta });
-
-/* ************************************************************** */
-
-const parsePush = ({ repository }) =>
-  getBlog(repository);
-//  .then(logBlog);
+const parsePush = ({ repository }) => getBlog(repository);
 
 const handlePushNotification = (req, res, next) => {
   parsePush(JSON.parse(req.body.payload))
