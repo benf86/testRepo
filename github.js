@@ -1,30 +1,19 @@
 const request = require('request-promise');
-const Promise = require('bluebird');
-
 const githubRawPrefix = 'https://raw.githubusercontent.com';
 
-function receivePushNotification (req, res, next) {
-  const payload = JSON.parse(req.body.payload);
-  console.log('VVVVVVVVVVVVVVVVVVVVVVVVVVV');
-  console.log(payload);
-  console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-  getBlog(res)(payload);
-}
 
-function getBlog (res) {
-  return Promise.coroutine(function* requestBlogAsync ({ repository, pusher }) {
-    const uri = `${githubRawPrefix}/${repository.full_name}/master/blog.md`;
-    console.log(uri);
-    const blog = yield request.get(uri);
-    console.log(pusher.name);
-    console.log(blog || 'no blog available');
-    res.send(blog);
-  });
-}
+const getBlog = repository =>
+request.get(`${githubRawPrefix}/${repository.full_name}/master/blog.md`);
 
+const logBlog = (pusher, blog) => console.log(blog);
 
+/* ************************************************************** */
 
+const parsePush = ({ repository, pusher }) =>
+  getBlog(repository)
+  .tap(logBlog.bind(null, pusher))
+  .return({ repository, pusher });
 
 module.exports = {
-  receivePushNotification,
+  handlePushNotification: (req, res, next) => parsePush(JSON.parse(req.body.payload)).then(res.send),
 };

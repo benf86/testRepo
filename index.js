@@ -9,6 +9,6 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/', ghAPI.receivePushNotification);
+app.use('/', ghAPI.handlePushNotification);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
