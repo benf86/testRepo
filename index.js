@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const ghAPI = require('./github');
+const ghostAPI = require('./ghost');
 
 const port = 8455;
 
@@ -15,5 +16,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/', ghAPI.handlePushNotification);
+app.use('/', ghostAPI.handleGhUpdate);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

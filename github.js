@@ -2,11 +2,13 @@ const request = require('request-promise');
 const githubRawPrefix = 'https://raw.githubusercontent.com';
 
 
-const getBlog = repository =>
-  request.get(`${githubRawPrefix}/${repository.full_name}/master/blog.md`);
+const getBlog = repository => ({
+  blog: request.get(`${githubRawPrefix}/${repository.full_name}/master/blog.md`),
+  meta: request.get(`${githubRawPrefix}/${repository.full_name}/master/meta.yaml`),
+});
 
-const logBlog = (pusher, blog) =>
-  console.log(`Pusher:\t${JSON.stringify(pusher, 0, 2)}\nContent:\n${blog}`) || ({ pusher, blog });
+const logBlog = (pusher, { blog, meta }) =>
+  console.log(`Pusher:\n${JSON.stringify(pusher, 0, 2)}\nMeta: ${meta}\nContent:\n${blog}`) || ({ pusher, blog, meta });
 
 /* ************************************************************** */
 
