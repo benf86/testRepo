@@ -21,7 +21,7 @@ const parsePush = ({ repository }) =>
 const handlePushNotification = (req, res, next) => {
   parsePush(JSON.parse(req.body.payload))
   .then((data) => {
-    req.integratorData.blog = data;
+    req.integratorData = data;
     next();
   });
 };
