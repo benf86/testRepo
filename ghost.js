@@ -16,8 +16,7 @@ const login = () => request.post(
       client_id: config.ghost.clientId,
       client_secret: config.ghost.clientSecret,
     },
-  },
-);
+  });
 
 
 const handleGhUpdate = (req, res, next) => {
