@@ -8,18 +8,18 @@ function receivePushNotification (req, res, next) {
   console.log('VVVVVVVVVVVVVVVVVVVVVVVVVVV');
   console.log(payload);
   console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-  getBlog(res)(payload.repository.full_name);
+  getBlog(res)(payload);
 }
 
 function getBlog (res) {
-  return Promise.coroutine(function* requestBlogAsync (repoFullName) {
-    const uri = `${githubRawPrefix}/${repoFullName}/master/blog.md`;
+  return Promise.coroutine(function* requestBlogAsync ({ repository, pusher }) {
+    const uri = `${githubRawPrefix}/${repository.full_name}/master/blog.md`;
     console.log(uri);
     const blog = yield request.get(uri);
+    console.log(pusher.name);
     console.log(blog || 'no blog available');
-    return blog;
-  })
-  .then(r => res.send(r));
+    res.send(blog);
+  });
 }
 
 
@@ -27,5 +27,4 @@ function getBlog (res) {
 
 module.exports = {
   receivePushNotification,
-  getBlog,
 };
